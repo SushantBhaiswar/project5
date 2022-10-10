@@ -1,23 +1,15 @@
 const express = require('express');
+const { createuser } = require('../Controllers/userControllers');
+const { uservalidatuion } = require('../middlewars/schemamiddleware');
 const router = express.Router();
 
 
-//--------------------------> (This is test api ) <-------------------------------------//
-
-router.get("/test-me", function (req, res) {
-    res.send("My first ever api!")
-})
+router.post("/register", createuser ) //create user
 
 
-//================================( All api)====================================//
-
-
-
-
-
-// router.all("/**",  (req, res) => {
-//     return res.status(400).send({ status: false, msg: "Invalid api." })
-// });
+router.all("/**",  (req, res) => {
+    return res.status(400).send({ status: false, msg: "Invalid api." })
+});
 
 
 
