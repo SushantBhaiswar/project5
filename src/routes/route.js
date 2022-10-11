@@ -1,10 +1,11 @@
 const express = require('express');
 const { createuser } = require('../Controllers/userControllers');
-const { uservalidatuion } = require('../middlewars/schemamiddleware');
+const { uservalidatuion , updatevalidation } = require('../middlewars/schemamiddleware');
 const router = express.Router();
 
 
 router.post("/register", createuser ) //create user
+router.put("/upadte",updatevalidation, createuser ) //update user
 
 
 router.all("/**",  (req, res) => {
