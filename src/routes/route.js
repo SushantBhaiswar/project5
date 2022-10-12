@@ -1,13 +1,12 @@
 const { APIGateway } = require('aws-sdk');
 const express = require('express');
-const { createuser,updateUserByParam } = require('../Controllers/userControllers');
+const { createuser,updateUserByParam, loginuser } = require('../Controllers/userControllers');
+const { authenticate, authorize } = require('../middlewars/auth');
 const router = express.Router();
 
-//.......................User API'S................................................................
 router.post("/register", createuser ) //create user
-// router.put("/upadte",updatevalidation, createuser ) //update user
-
-router.put("/user/:userId/profile",updateUserByParam)
+router.put("/user/:userId/profile",authenticate,authorize, updateUserByParam)//update user
+router.post("/login",loginuser)//login user
 
 
 

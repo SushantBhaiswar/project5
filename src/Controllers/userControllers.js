@@ -1,42 +1,21 @@
-const aws = require("aws-sdk");
 const UserModel = require("../Models/UserModel");
 const bcrypt = require("bcrypt");
-const { parse } = require("dotenv");
 const { usermodule, userupdate } = require("../DataValidation/schemavalidation");
-const createError = require('http-errors')
+const createError = require('http-errors');
+const { uploadFile } = require("../connections/aws");
+const md5 = require('md5')
+const jwt = require('jsonwebtoken')
+require('dotenv')
 
-aws.config.update({
-    accessKeyId: "AKIAY3L35MCRZNIRGT6N",
-    secretAccessKey: "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",
-    region: "ap-south-1"
-})
-
-let uploadFile = async (file) => {
-    return new Promise(function (resolve, reject) {
-        let s3 = new aws.S3({ apiVersion: '2006-03-01' });
-        var uploadParams = {
-            ACL: "public-read",
-            Bucket: "classroom-training-bucket",
-            Key: "abc/" + file.originalname,
-            Body: file.buffer
-        }
-        s3.upload(uploadParams, function (err, data) {
-            if (err) {
-                return reject({ "error": err })
-            }
-            console.log("file uploaded succesfully")
-            return resolve(data.Location)
-        })
-    })
-}
 module.exports = {
     //create user
     createuser: async function (req, res) {
         try {
             let data = req.body
-          
+
             let address = JSON.parse(data.address)
             data.address = address
+
             const { error } = usermodule.validate(data)
             if (error)
                 return res.status(400).send({ status: false, message: error.message })
@@ -69,13 +48,24 @@ module.exports = {
             res.status(500).send({ status: false, msg: error.message });
         }
     },
+    loginuser: async function (req, res) {
+        let { email, password } = req.body
+        let user = await UserModel.findOne({ email: email });
+        let compare = await bcrypt.compare(password, user.password)
+        if (!compare) return res.status(400).send({ status: false, message: "Invalid credentials" })
+       
+        let token = jwt.sign({
+            userId: user._id
+        }, process.env.secret_key)
+        res.status(200).send({ status: true, Message: "User login successfull", data: { userId: user._id, token: token } })
+
+    },
     // update user
     updateUserByParam: async function (req, res) {
         try {
             let userId = req.params.userId;
             let id = await UserModel.findById(userId)
             if (!id) return res.status(404).send({ status: false, message: "user not found" })
-            //if (id.isDeleted == true) return res.status(404).send({ status: false, message: "book is already deleted, you can't update" })
 
             let { fname, lname, email, profileImage, phone, password, address } = req.body;
 

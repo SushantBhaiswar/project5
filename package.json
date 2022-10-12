@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/sabihak89/plutonium.git"
   },
-  "author": "Koushik Mandal ,Sushant Bhaiswar",
+  "author": "Sushant Bhaiswar",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sabihak89/plutonium/issues"
@@ -25,6 +25,8 @@
     "express": "^4.18.1",
     "http-errors": "^2.0.0",
     "joi": "^17.6.2",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
     "mongoose": "^6.6.2",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.20"
