@@ -5,8 +5,8 @@ module.exports =
 {
     usermodule: joi.object
         ({
-            fname: joi.string().required(),
-            lname: joi.string().required().trim(),
+            fname: joi.string().required().label('First Name'),
+            lname: joi.string().required().trim().label('Last Name'),
             email: joi.string().required().email().trim(),
             profileImage: joi.string(),
             phone: joi.string().required().min(10).message("Phone number should be greater than 10").max(10).message("Phone number should be less than 10"),
@@ -16,12 +16,12 @@ module.exports =
                 {
                     street: joi.string().required().trim(),
                     city: joi.string().required().trim(),
-                    pincode: joi.number().required()/*.min(6).message({ 'any.only': 'Pincode should be 6 digits' }).max(6).message({ 'any.only': "Pincode should be 6 digits" })*/
+                    pincode: joi.number().required()
                 },
                 billing: {
                     street: joi.string().required().trim(),
                     city: joi.string().required().trim(),
-                    pincode: joi.number().required()/*.min(6).message({ 'any.only': 'Pincode should be 6 digits' }).max(6).message({ 'any.only': "Pincode should be 6 digits" })*/
+                    pincode: joi.number().required()
                 }
             })
         })
