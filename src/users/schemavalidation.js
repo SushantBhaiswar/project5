@@ -1,5 +1,5 @@
 const joi = require('joi')
-const UserModel = require('../Models/UserModel')
+const UserModel = require('./UserModel')
 
 module.exports =
 {

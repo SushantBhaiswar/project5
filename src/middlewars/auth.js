@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
-const UserModel = require("../Models/UserModel");
+const UserModel = require("../users/UserModel");
 const ObjectId = mongoose.Types.ObjectId
 require('dotenv')
 module.exports = {

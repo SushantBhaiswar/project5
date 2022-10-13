@@ -1,6 +1,6 @@
-const UserModel = require("../Models/UserModel");
+const UserModel = require("./UserModel");
 const bcrypt = require("bcrypt");
-const { usermodule, userupdate } = require("../DataValidation/schemavalidation");
+const { usermodule, userupdate } = require("./schemavalidation");
 const createError = require('http-errors');
 const { uploadFile } = require("../connections/aws");
 const md5 = require('md5')
@@ -12,8 +12,9 @@ module.exports = {
     createuser: async function (req, res) {
         try {
             let data = req.body
-
+            if (!data.address) return res.status(400).send({ status: false, message: "Address is required" })
             let address = JSON.parse(data.address)
+
             data.address = address
 
             const { error } = usermodule.validate(data)
@@ -53,7 +54,7 @@ module.exports = {
         let user = await UserModel.findOne({ email: email });
         let compare = await bcrypt.compare(password, user.password)
         if (!compare) return res.status(400).send({ status: false, message: "Invalid credentials" })
-       
+
         let token = jwt.sign({
             userId: user._id
         }, process.env.secret_key)
@@ -70,7 +71,7 @@ module.exports = {
             let { fname, lname, email, profileImage, phone, password, address } = req.body;
 
             if (Object.entries(req.body).length == 0) {
-                return res.status(400).send({ status: false, message: "Please enter what you want to update" })
+                return res.status(400).send({ status: false, message: "Enter Keys to update" })
             }
             const data = {};
             if (email) {
