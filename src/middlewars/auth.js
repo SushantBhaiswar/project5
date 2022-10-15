@@ -14,10 +14,8 @@ module.exports = {
           return res.status(400).send({ status: false, message: error.message });
         }
         req.decodedtoken = decoded
-        console.log(req.decodedtoken);
         next()
       })
-
     } catch (error) {
       return res.status(500).send({ status: false, message: error.message })
     }

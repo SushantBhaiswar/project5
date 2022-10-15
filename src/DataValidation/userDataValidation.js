@@ -1,2 +1,0 @@
-const checkPasswordValidity = require('./passwordValidation')
-

@@ -1,8 +1,13 @@
 const express = require('express')
-const { createuser, updateUserByParam, loginuser } = require('./userControllers')
+const { createuser, updateUserByParam, loginuser, getuser, forgetpassword, ResetPassword } = require('./userControllers')
 const router = express.Router()
+const { authorize, authenticate } = require('../middlewars/auth')
 
+router.post("/register", createuser)
+router.post("/login", loginuser)
+router.get("/user/:userId/profile", authenticate, getuser)
+router.put("/user/:userId/profile", authenticate, authorize, updateUserByParam)
+router.post("/forgetpassword", authenticate, forgetpassword)
+router.post("/ResetPassword", authenticate, ResetPassword)
 
-router.post("/register", createuser ) //create user
-router.post("/login",loginuser)//login user
-router.put("/user/:userId/profile",authenticate,authorize, updateUserByParam)//update user
+module.exports = router

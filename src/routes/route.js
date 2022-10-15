@@ -1,9 +1,10 @@
 const express = require('express');
+const product = require('../products/index');
 const router = express.Router();
-const userRoute =require('../users/index')
+const user =require('../users/index')
 
-router.use('/',userRoute)
-
+router.use('/',user)
+router.use('/',product)
 
 
 
