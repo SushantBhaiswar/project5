@@ -268,7 +268,7 @@ Send [form-data](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 
 ## Cart APIs (_authentication required as authorization header - bearer token_)
 ### POST /users/:userId/cart (Add to cart)
-- Create a cart for the user if it does not exist. Else add product(s) in cart.
+- Create a cart for the user if it does not exist. Else  add product(s) in cart.
 - Get cart id in request body.
 - Get productId in request body.
 - Make sure that cart exist.
@@ -299,7 +299,7 @@ Send [form-data](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 ### GET /users/:userId/cart
 - Returns cart summary of the user.
 - Make sure that cart exist.
-- Make sure the userId in params and in JWT token match.
+- Make sure the userId in params and in   JWT token match.
 - Make sure the user exist
 - Get product(s) details in response body.
 - __Response format__

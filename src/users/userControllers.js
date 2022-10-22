@@ -58,7 +58,7 @@ module.exports = {
             let user = await UserModel.findOne({ email: email, isDeleted: false });
             if (!user) return res.status(404).send({ status: false, message: "User not found" })
             let compare = await bcrypt.compare(password, user.password)
-         
+
             if (!compare) return res.status(400).send({ status: false, message: "Invalid credentials" })
 
             let token = jwt.sign({
@@ -78,7 +78,7 @@ module.exports = {
             if (userId != req.decodedtoken.userId)
                 return res.status(400).send({ status: false, message: "Wrong userId is provided" })
             if (!ObjectId.isValid(userId)) return res.status(400).send({ status: false, message: "userId is Invalid" })
-          
+
             let fetchdetails = await UserModel.findOne({ _id: userId, isDeleted: false })
             if (!fetchdetails) return res.status(404).send({ status: false, message: "Data not found" })
 
@@ -102,7 +102,7 @@ module.exports = {
             let data = await UserModel.findOne({ _id: userId, isDeleted: false }).lean()
             if (!data) return res.status(404).send({ status: false, message: "user not found" })
 
-            let { password, address ,email,phone,fname,lname} = req.body;
+            let { password, address, email, phone, fname, lname } = req.body;
             let value = req.body
             if (address) {
                 value.address = JSON.parse(address)
@@ -115,11 +115,11 @@ module.exports = {
                 data.phone = phone;
             }
             if (fname) {
-             
+
                 data.fname = fname;
             }
             if (lname) {
-               
+
                 data.lname = lname;
             }
             const { error } = updatevalidation.validate(value)
@@ -160,7 +160,7 @@ module.exports = {
             }
             if (req.files) {
                 let files = req.files
-                console.log(files[0].fieldname)
+                // console.log(files[0].fieldname)
                 if (files.length > 0 && files[0].fieldname !== "profileImage")
                     return res.status(400).send({ status: false, message: `profileImage is mandatery` })
                 if (files && files.length > 0) {
@@ -177,7 +177,7 @@ module.exports = {
 
                 data.password = hashpassword;
             }
-              console.log(data)
+            console.log(data)
             let update = await UserModel.findOneAndUpdate({ _id: userId }, data, { new: true })
             console.log(update)
 
